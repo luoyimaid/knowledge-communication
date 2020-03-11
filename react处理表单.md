@@ -150,3 +150,69 @@ class App extends component {
 > 3. 事件处理器通过e.target拿到改变后的状态，并更新state
 > 4. setstate触发视图的重新渲染，完成表单组件值的更新
 - 在react中，数据是单向流动的。表单的数据源于state，并通过props传入，完成了数据的**单向绑定**。而数据改变会触发onchange事件处理器，将更新的表单数据写回到表单的state，完成了数据的**双向绑定**
+
+##### 2. 非受控组件
+- 如果一个表单中没有value props，就可以称之为非受控组件。但是相应的，可以通过defaultValue & defaultChecked prop来表示表单的默认状态。
+- 在react中，非受控状态是一种反模式，值不受自身的state或者props来控制，所以通常需要添加ref prop来访问渲染后的底层DOM元素
+```
+import React, {Component} from 'react';
+class App extends component {
+    constructor {
+        super(props);
+        //
+        this.hanleInputeChange = this.hanleInputeChange.bind(this);
+    }
+    hanleInputeChange(e) {
+        e.preventDefault();
+        // 使用react提供的ref prop来操作DOM，此处也可以使用原生的接口
+        const value = this.refs.name;
+    }
+
+    render() {
+        const {inputValue, textareaValue} = this.state;
+        return {
+            <form onSubmit={this.hanleInputeChange}>
+                <input ref="name" type="text" defaultValue="luoyi"/>
+                <button type="submit">submit</button>
+            </form>
+        }
+    }
+}
+```
+##### 3. 对比受控&非受控组件
+- 受控组件和非受控组件最大的区别在于：
+    > 1. 受控组件的值来自于组件的state，可以随时更新状态
+    > 2. 非受控组件的状态不会受应用组件状态的控制，应用中也多了局部组件状态
+- 对比以下示例：
+```
+// 受控组件：将输入的字母转化为大写展示
+<input
+    value={this.state.value}
+    onchange={e => {
+        this.setState({value: e.target.value.toUpperCase()});
+    }}
+/>
+// 非受控组件：直接展示输入的字母
+// 多数情况下，对于非受控组件，并不需要提供onChange事件
+<input
+    defaultValue={this.state.value}
+    // 属于非受控组件中的后续渲染，不起作用...
+    onchange={e => {
+        this.setState({value: e.target.value.toUpperCase()});
+    }}
+/>
+```
+> ##### 1. 性能上的对比：
+ - 在受控组件中，表单的值每次发生变化时，都会调用一次onChange事件，使得在性能上会有一定的损耗。但是可以通过flux/redux应用架构等方式来达到组件统一状态的目的
+    > ps:目前不熟悉如何通过flux/redux应用架构等方式来达到组件统一状态的目的，后续看到redux的时候可以作为一个知识点去针对性的回忆
+> ##### 2. 事件绑定方面的对比：
+- 非受控组件大多数情况下是不需要去给元素绑定一个change事件的，而受控组件中，必须去给每一个受控组件绑定一个change事件，但是某种情况下，可以给多个组件去绑定同一个事件，事件中通过state去处理不同的数据也是OK的
+
+#### 3. 表单组件的几个重要属性
+------
+##### 1. 状态属性
+- `value`：类型为text的input组件，textarea，select等组件，都是借助value prop来展示应用的状态
+- `checked`：类型为radio / checkbox的组件借助值为boolean类型的checked prop来展示组件的应用状态
+- `selected`：该属性可作用于select组件下的option上，但react还是建议在select上使用value的方式来表示状态
+##### 2. 事件属性
+- change等表单事件
