@@ -103,3 +103,131 @@ buttonElement.outerHTML = <button type="submit" class=${styles.nomal}>submit</bu
     3. 只需引入组件的JS，就可以搞定组件的JS&CSS
 
 ##### 2. 默认样式为局部样式
+- css module默认样式为局部样式，即默认给所有的样式名外加了:local，如果想切换到全局样式，用:global包裹
+```
+:local(.nomal) {
+    //
+}
+//定义单个全局样式
+:global(.btn) {
+    //
+}
+// 定义多个全局样式
+:global {
+    .link {}
+    .box{}
+}
+```
+
+##### 3. 使用composes组合样式
+- css module提供了一种方式用于样式复用：composes
+```
+// 第一种使用方式：使用内部文件样式
+//
+/* components/button.css */
+.base {}
+.nomal {
+    composes: base
+    //
+}
+.disable {
+    composes: base
+    //
+}
+// js里
+import styles from './button.css';
+//
+button.innerHTMl = <button type='submit' class=${styles.nomal}>submit</button>
+// 最终生成的HTML如下
+<button type='submit' class='button--base-abc53 button--nomal-abc53'>submit</button>
+//
+// 第二种使用方式：引用外部文件样式
+//
+/* setting.css */
+.primary-color {}
+/* components/button.css */
+.base {}
+.primary {
+    composes: base;
+    composes: $primary-color from 'setting.css';
+    //
+}
+```
+    使用问题：由于composes不是标准的CSS语法，编译时会报错，所以只能使用预处理器自己的语法来处理样式复用
+##### 4. 实现CSS与JS变量共享
+```
+/* config.scss */
+$primary-color: #fff;
+//
+:export {
+    ptimaryColor: $primary-color;
+}
+//
+/* app.js */
+import style from './config.scss';
+// 会输出#fff
+console.log(style.ptimaryColor);
+```
+##### 5. css module使用技巧
+- CSS module是对现有的CSS做减法，其中可以参考的建议使用规则如下：
+    1. 不使用选择器，只使用class来定义样式
+    2. 不层叠多个class，只使用一个class把所有样式定义好
+    3. 所有的样式通过composes来实现复用
+    4. 不嵌套
+
+    > 注意：css module只会转换class名相关的样式
+    
+##### 6. 如何与全局样式实现共存
+- 前端项目中总会引入一些base.css一类的全局css文件,使用webpack可以使全局样式与css module的局部样式和谐共存。具体配置如下
+```
+module: {
+    loaders: [{
+        test: /\.jsx?$/,
+        loader: 'babel'
+    },{
+        test: /\.scss$/
+        exclude: path.resolve(__dirname, 'src/views'),
+        loader: 'style!css?modules&localIndentName=[name]__[local]!sass?sourceMap=true'
+    },{
+        test: /\.scss$/
+        exclude: path.resolve(__dirname, 'src/styles'),
+        loader: 'style!css!sass?sourceMap=true'
+    }]
+}
+/* src/app.js */
+import './styles/app/scss'; // 全局样式
+import component from './views/component';
+/* src/views/component.js */
+import './component.scss';
+```
+#### 3. CSS module结合react的实践
+------
+- react里面写样式我们已经熟知了，所以不再重复赘述，但是如果我们不想频繁的使用styles.xx的话，可以频繁的使用react-css-loader库，它可以通过高阶组件的形式避免重复输入styles.xx
+```
+import react, {Component} from 'react';
+import classnames from 'classnames';
+import CSSModules from 'react-css-loader';
+import styles from './dialog.css';
+//
+class dialog extent Component {
+    render() {
+        const cx = classnames({
+            confirm: !this.state.disabled,
+            discomfirm: this.state.disabled
+        });
+        return (
+            <div className='root'>
+                <a styleName={cx}></a>
+                ...
+            </div>
+        );
+    }
+}
+export default CSSModule(dialog, styles);
+```
+- 对比我们最初写的CSS module，它有自己的优点：
+    1. 不用再关注是否使用驼峰命名
+    2. 不用每一次使用css module的时候都都关联style对象
+    3. 可以强迫使用单一的css module
+    4. 当stylename关联了一个undefined css module的时候，会得到一个警告
+    5. 可以解决通过:global去写全局样式的情况，使用react-css-module可以写成这种形式：`<div className="global-css"></div>`
