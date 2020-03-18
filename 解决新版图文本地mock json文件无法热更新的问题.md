@@ -37,6 +37,13 @@
     contentBase: path.resolve(componentSrcFolder),
     watchContentBase: true,
     ```
+    5. 因为提交时不应该把`publish/data.json`提交到代码库，所以需要在start server的时候去判断json文件是否存在，不存在的话便创建，这样方便协同开发
+    ```
+    if (!fs.ensureFileSync(jsonPath)) {
+        fs.createFileSync(jsonPath);
+        fs.writeFileSync(jsonPath, JSON.stringify(readMockData() || {}));
+    }
+    ```
 - **遇到的问题**:
 1.  通过读取文件内容的方式去获取各个json文件数据时，发现改变文件内容时，热更新时写入文件没有生效
 
@@ -53,8 +60,12 @@
     > 参考：https://expressjs.com/en/guide/using-middleware.html
 3. 在完成解决步骤1-4之后，基本已经实现了需要的功能，但是有一点瑕疵：json文件需要`command + s`两次及以上才会生效，对于ts，less等文件，修改之后保存一次便可生效
 
-    > 原因：保存时开发文件已经编译过了，所以会拿到新的编译文件，但是json文件是本地静态文件，需要通过读文件&写入文件的操作才能生效，这里有一个先后顺序的问题，重写文件在修改编译完之后的话，需要多保存几次才会生效
+    > 猜想原因：保存时开发文件已经编译过了，所以会拿到新的编译文件，但是json文件是本地静态文件，需要通过读文件&写入文件的操作才能生效，这里有一个先后顺序的问题，重写文件在修改编译完之后的话，需要多保存几次才会生效
 
-    > 解决：在编译的beforecompile阶段去写入文件，即步骤5，明天解决了补充
+    > 解决：在编译的beforecompile阶段去写入文件，结果发现不是这么解决的，pass。在这里踩坑踩了半天，又绕回去了
     
     > 参考：https://webpack.js.org/api/compiler-hooks/#beforecompile
+    
+    > 实际原因：文件读写不在编译流程之内，所以没法去通过compile钩子来实现，可能文件读写和main.js编译顺序刚好跟想的相反
+
+    > 解决：不解决了，步骤四的效果可以接受，开发文件保存即生效，mock文件保存之后需刷新一次浏览器生效
