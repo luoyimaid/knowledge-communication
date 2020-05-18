@@ -78,56 +78,5 @@ const insertSort = arr => {
 }
 insertSort(arr);
 
-let A = [1, 2, 3, 4, 5];
-let B = [6, 8, 10, 7];
-// 数组去重（保证A 和 B 数组无重复值）
-const uneque = (arr) => {
-    if (!Array.isArray(arr)) {
-        console.log('not a array');
-        return;
-    }
-    let array = [];
-    for (let i = 0; i < arr.length; i++) {
-        if (!array.includes(arr[i])) {  
-            array.push(arr[i]);
-        }
-    }
-    return array;
-}
-const select = (A, B) => {
-    let array = [];
-    let answer;
-    A = uneque(A).sort((a, b) => {
-        return a-b;
-    });
-    B = uneque(B).sort((a, b) => {
-        return a-b;
-    });
-    A = uneque(A).concat(uneque(B)).sort((a, b) => {
-        return a-b;
-    });
-    for(let i = 0; i < A.length - 1; i ++) {
-        array.push(A[i+1] - A[i]);
-    }
-    array = [...new Set(array)].sort((a, b) => {
-        return a-b;
-    });
-    answer = array[0];
-    // 实现算法
-    return answer;
-}
-select(A, B);
-
-let A = [3, 1, 1, 2];
-function select(A) {
-    let array = new Array(A.length+1);
-    let currentResult;
-    for(let i = 1; i < A.length; i++) {
-        currentResult = ++array[A[i]]/A[0];
-        if (currentResult > A[0]/(A.length-1)) {
-            return currentResult;
-        }
-    }
-}
     
     

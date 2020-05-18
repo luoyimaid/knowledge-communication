@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>三栏布局</title>
+    <title>observe demo</title>
     <style type="text/css" media="screen">
         /* .left {
             width: 200px;
@@ -58,7 +58,7 @@
             right: 0;
             background-color: aquamarine;
         } */
-        .content {
+        /* .content {
             display: grid;
             grid-template-columns: 200px auto 200px;
             grid-template-rows: 200px;
@@ -68,10 +68,11 @@
         }
         .container {
             background-color: blueviolet;
-        }
+        } */
     </style>
 </head>
 <body>
+    <p>响应式 demo</p>
     <!-- <div class="content">
         <div class="left"></div>
         <div class="right"></div>
@@ -87,85 +88,65 @@
         <div class="left"></div>
         <div class="right"></div>
     </div> -->
-    <div class="content">
+    <!-- <div class="content">
         <div class="left"></div>
         <div class="container"></div>
         <div class="right"></div>
-    </div>
+    </div> -->
 
     <!-- 对比分析HOC  render props  hook -->
     <!-- <script src='./react/hocRenderHook.js'></script> -->
-    <script src='./nativeJS/array.js'></script>
+    <!-- <script src='./nativeJS/array.js'></script> -->
+    <script src="./vueObserve.js"></script>
     <script>
         // 实现函数节流：间隔时间执行（比如间隔一秒执行一次）
-        function throttle(func, time) {
-            let timeout;
-            return function() {
-                if(!timeout) {
-                    timeout = setTimeout(() => {
-                        timeout = null;
-                        func.call(this, arguments);
-                    }, time);
-                }
-            }
-        }
-        // 实现函数防抖：一段时间内只执行一次，这段时间内再次被触发时重新计算时间
-        function debounce(func, time) {
-            let timeout;
-            return function () {
-                if (timeout) {
-                    clearTimeout(timeout);
-                }
-                timeout = setTimeout(() => {
-                    func.apply(this, arguments);
-                }, time);
-            }
-        }
-        function run1 () {
-            console.log('点击执行函数防抖');
-        }
-        function run2 () {
-            console.log('点击执行函数节流');
-        }
-        document.onclick = debounce(run1, 500);
-        // document.onclick = throttle(run2, 500);
+        // function throttle(func, time) {
+        //     let timeout;
+        //     return function() {
+        //         if(!timeout) {
+        //             timeout = setTimeout(() => {
+        //                 timeout = null;
+        //                 func.call(this, arguments);
+        //             }, time);
+        //         }
+        //     }
+        // }
+        // // 实现函数防抖：一段时间内只执行一次，这段时间内再次被触发时重新计算时间
+        // function debounce(func, time) {
+        //     let timeout;
+        //     return function () {
+        //         if (timeout) {
+        //             clearTimeout(timeout);
+        //         }
+        //         timeout = setTimeout(() => {
+        //             func.apply(this, arguments);
+        //         }, time);
+        //     }
+        // }
+        // function run1 () {
+        //     console.log('点击执行函数防抖');
+        // }
+        // function run2 () {
+        //     console.log('点击执行函数节流');
+        // }
+        // document.onclick = debounce(run1, 500);
+        // // document.onclick = throttle(run2, 500);
 
+        // // Object.defineProperty基本用法
+        // const data = {};
+        // const name = 'luoyi';
+        // Object.defineProperty(data, 'name', {
+        //     get: function() {
+        //         console.log('get');
+        //         return name;
+        //     },
+        //     set: function(newVal) {
+        //         console.log('set');
+        //         name = newVal;
+        //     }
+        // });
+        // console.log(data.name);
 
-        let A = [1, 2, 3, 4, 5];
-        let B = [30, 16, 36, 29];
-        const uneque = (arr) => {
-            if (!Array.isArray(arr)) {
-                console.log('not a array');
-                return;
-            }
-            let array = [];
-            for (let i = 0; i < arr.length; i++) {
-                if (!array.includes(arr[i])) {  
-                    array.push(arr[i]);
-                }
-            }
-            return array;
-        }
-        const select = (A, B) => {
-            let array = [];
-            let answer;
-            A = uneque(A).concat(uneque(B)).sort((a, b) => {
-                return a-b;
-            });
-            console.log(A);
-            for(let i = 0; i < A.length - 1; i ++) {
-                array.push(A[i+1] - A[i]);
-            }
-            array = uneque(array).sort((a, b) => {
-                return a-b;
-            });
-            console.log(array);
-            answer = array[0];
-            console.log(answer);
-            // 实现算法
-            return answer;
-        }
-        select(A, B);
     </script>
 </body>
 </html>
