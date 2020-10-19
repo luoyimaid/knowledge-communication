@@ -1,21 +1,3 @@
-// 短轮训
-// http 短轮询是server收到请求不管是否有数据到达都直接响应http请求，
-// 服务端响应完成，就会关闭这个TCP连接；
-// 如果浏览器收到的数据为空，则隔一段时间，浏览器又会发送相同的http请求到server以获取数据响应
-const xhr = new XMLHttpRequest();
-const id = setInterval(() => {
-    xhr.open('GET', 'https://www.baidu.com');
-    xhr.addEventListener('load', function(e) {
-        if (xhr.status === 200) {
-            // 处理数据
-            console.log(xhr.response);
-            clearInterval(id);
-        }
-    });
-}, 200);
-
-let i = 10;
-
 // 用settimeout实现setinterval
 const mySetInterval = (callback, time) => {
 	(function inner() {
@@ -30,6 +12,7 @@ mySetInterval(() => {
 	if(i>0) console.log(i);
 	i--;
 }, 50);
+
 // 用setinterval实现settimeout
 const mySetTimeout = (callback, time) => {
     const timer = setInterval(() => {
@@ -37,19 +20,6 @@ const mySetTimeout = (callback, time) => {
         callback();
     }, time)
 }
-
-// 创建对象
-// 1. 字面量
-let obj = {};
-// 2. new Object
-let obj = new Object();
-// 3. 构造函数
-let a = function (name) {
-    ///
-}
-let obj = new a();
-// 4. object.create
-let obj = Object.create();
 
 // 自己实现instanceof: 判断实例是否属于某一个构造函数
 function _instanceof (leftvalue, rightvalue) {
@@ -76,6 +46,7 @@ function throttle(func, time) {
         }
     }
 }
+
 // 实现函数防抖：一段时间内只执行一次，这段时间内再次被触发时重新计算时间
 function debounce(func, time) {
     let timeout;
@@ -99,7 +70,7 @@ document.onmousemove = throttle(run2, 200);
 
 let arr = [3,2,5,8,4,7,6,9];
 
-
+// 实际问题1
 let a;
 const b = new Promise((resolve, reject) => {
   console.log('promise1');
@@ -134,6 +105,7 @@ console.log('end');
 // Promise {<pending>}
 // after1
 
+// 实际问题2
 function Foo() {
     getName = function(){ 
         console.log(1);

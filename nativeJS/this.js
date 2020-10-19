@@ -30,35 +30,3 @@ Function.prototype.bind = function (thisArg) {
         f(arg);
     }
 }
-
-// 防抖
-const debounce = (func, time) => {
-    if (Function.prototype.toString.call(func) !== '[object Function]') {
-        return;
-    }
-    let timeout;
-    return function() {
-        if(timeout) {
-            clearTimeout(timeout);
-        }
-        timeout = setTimeout(() => {
-            func.apply(this, arguments);
-        }, time);
-    }
-}
-
-// 节流
-const throttle = (func, time) => {
-    if (Function.prototype.toString.call(func) !== '[object Function]') {
-        return;
-    }
-    let timeout;
-    return function() {
-        if(!timeout) {
-            timeout = setTimeout(() => {
-                timeout = null;
-                func.call(this, arguments);
-            }, time);
-        }
-    }
-}
