@@ -11,10 +11,11 @@ const deepClone = obj => {
     if (obj === null || typeof obj !== 'object') {
         return obj;
     }
-    const typeObj = Object.prototype.toString.call(obj);
-    if (typeObj === '[object Array]') {
-        result = [];
-    }
+    // const typeObj = Object.prototype.toString.call(obj);
+    // if (typeObj === '[object Array]') {
+    //     result = [];
+    // }
+    if (Array.isArray(obj)) result = [];
     for (let key in obj) {
         if (typeof obj[key] === 'object') {
             result[key] = deepClone(obj[key]);

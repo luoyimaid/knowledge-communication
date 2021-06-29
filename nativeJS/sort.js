@@ -78,5 +78,25 @@ const insertSort = arr => {
 }
 insertSort(arr);
 
-    
-    
+
+const quickSort = arr => {
+    if (arr.length <= 1) {
+        return arr;
+    }
+    let prev = arr.splice(parseInt(arr.length/2), 1)[0];
+    let left = right = [];
+    for (let i = 0; i < arr.length; i++) {
+        if(arr[i] < prev) {
+            left.push(arr[i]);
+        }
+        else {
+            right.push(arr[i]);
+        }
+    }
+    return quickSort(left).concat(prev, quickSort(right));
+}
+
+const orderedArray = (arr1, arr2) => {
+    arr1 = arr1.concat(arr2);
+    return quickSort(arr1);
+}

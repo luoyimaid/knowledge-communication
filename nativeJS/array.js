@@ -15,7 +15,7 @@ Array.prototype.map = function(callbackFn, thisArg) {
     let o = Object(this);
     let t = thisArg;
 
-    let length = o.length >>> 0;
+    let length = o.length;
     let array = new Array(length);
 
     for(let k = 0; k < length; k++) {
