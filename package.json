@@ -1,0 +1,49 @@
+{
+  "name": "bundle-test",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "NODE_ENV=production webpack-cli build --entry ./src/index.js -o ./output",
+    "build:s": "NODE_ENV=production san build ./src/index.js",
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luoyimaid/knowledge-communication"
+  },
+  "author": "luoyi_maid",
+  "license": "UNLICENSED",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint",
+    "*.{css,less,scss,styl}": "stylelint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "devDependencies": {
+    "@ecomfe/eslint-config": "^4.0.0",
+    "@ecomfe/stylelint-config": "^1.0.0",
+    "babel-eslint": "^10.0.0",
+    "eslint": "^7.0.0",
+    "eslint-plugin-babel": "^5.0.0",
+    "html-webpack-plugin": "^5.4.0",
+    "husky": "^4.0.0",
+    "lint-staged": "^10.0.0",
+    "stylelint": "^13.0.0",
+    "webpack": "^5.60.0",
+    "webpack-bundle-analyzer": "^4.5.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^4.3.1"
+  },
+  "dependencies": {
+    "css-loader": "^6.4.0",
+    "mini-css-extract-plugin": "^2.4.3",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "style-loader": "^3.3.1",
+    "terser-webpack-plugin": "^5.2.4",
+    "unix-timestamp": "^0.2.0"
+  }
+}

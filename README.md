@@ -3,6 +3,16 @@ witness my growing &amp; improvement
 
 > 一些自己的学习内容总结，之前有做过类似的事情，但总是断断续续的，并没有坚持下来，希望从头开始并且坚持下来
 
+未使用框架，使用webpack纯手动搭建的原生实现
+
+`yarn`
+
+`yarn start`
+
+`yarn build`
+
+配置了CSS压缩插件，CSS单独打包插件，JS压缩插件，
+还有analyze插件，生成一个json文件
 
 ### 1. JS方法实现
 > [改变this指向](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/this.js)

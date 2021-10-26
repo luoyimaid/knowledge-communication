@@ -58,7 +58,7 @@ const keyboard = {
         ];
 
         // create html for icon
-        createIconElement = (iconName) => {
+        const createIconElement = (iconName) => {
             return `<i class="material-icons">${iconName}</i>`
         }
 
@@ -170,7 +170,4 @@ const keyboard = {
     }
 };
 
-// 监听DOM元素加载完成事件DOMContentLoaded，然后初始化键盘事件~
-window.addEventListener('DOMContentLoaded', function () {
-    keyboard.init();
-});
+export default keyboard;
