@@ -57,3 +57,24 @@ var searchMatrix = function(matrix, target) {
     return false;
 };
 console.log(searchMatrix(matrix, target));
+
+// 找出nums1中每个元素在nums2中下一个比其大的值
+const nums1 = [4, 1, 2], nums2 = [1, 3, 4, 2];
+const nextGreaterElement = (nums1, nums2) => {
+    const result = new Array();
+    let i = 0;
+    let j = 1;
+    while (i < nums1.length) {
+        if (nums2[j] <= nums1[i]) {j++;}
+        else {
+            if (nums2[j] > nums1[i]) result.push(nums2[j]);
+            if (j >= nums2.length - 1) result.push(-1);
+
+            i++;
+            j = i + 1;
+        }
+    }
+
+    return result;
+}
+console.info(nextGreaterElement(nums1, nums2));
