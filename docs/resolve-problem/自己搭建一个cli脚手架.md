@@ -7,6 +7,7 @@
 
 ### 如何使用
 
+```js
 .
 ├── README.md
 ├── build.sh
@@ -18,3 +19,4 @@
 │       ├── index.js
 │       └── package.json
 └── yarn.lock
+```
