@@ -28,19 +28,19 @@ function foo(a, b) {
     console.log(b);
 
     return {
-        foo: function(c) {
+        foo: function (c) {
             return foo(c, a);
-        }
-    }
+        },
+    };
 }
 
-var func = foo(0);
+let func = foo(0);
 func.foo(1);
 func.foo(2);
 func.foo(3);
 
-var func2 = foo(0).foo(1).foo(2).foo(3);
-var func3 = foo(0).foo(1);
+let func2 = foo(0).foo(1).foo(2).foo(3);
+let func3 = foo(0).foo(1);
 func3.foo(2);
 func3.foo(3);
 

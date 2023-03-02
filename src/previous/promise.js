@@ -1,7 +1,7 @@
 const PENDING = 'pending';
 const REJECTED = 'rejected';
 const FULFILLED = 'fulfilled';
-function myPromise (executor) {
+function myPromise(executor) {
     // 绑定this，设置初始值
     let self = this;
     self.value = null;
@@ -10,27 +10,31 @@ function myPromise (executor) {
     self.onRejected = [];
     self.onFulfilled = [];
     // 添加resolve方法，延时回调
-    const resolve = (value) => {
-        if (self.status !== PENDING) return;
+    const resolve = value => {
+        if (self.status !== PENDING) {
+            return;
+        }
         setTimeout(() => {
             self.status = FULFILLED;
             self.value = value;
             self.onFulfilled.forEach(callback => {
                 callback(self.value);
             });
-        },200);
-    }
+        }, 200);
+    };
     // 添加reject方法，延时回调
-    const reject = (error) => {
-        if (self.status !== PENDING) return;
+    const reject = error => {
+        if (self.status !== PENDING) {
+            return;
+        }
         setTimeout(() => {
             self.status = REJECTED;
             self.error = error;
             self.onRejected.forEach(callback => {
                 callback(self.value);
-            });        
-        },200);
-    }
+            });
+        }, 200);
+    };
     // 把成功和失败回调传给目标方法
     executor(resolve, reject);
 }
@@ -38,14 +42,16 @@ myPromise.prototype.then = (onFulfilled, onRejected) => {
     let self = this;
     let bridgePromise;
     // 成功回调不传给它一个默认函数
-    onFulfilled = typeof onFulfilled === "function" ? onFulfilled : value => value;
+    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value;
     // 对于失败回调直接抛错
-    onRejected = typeof onRejected === "function" ? onRejected : error => { throw error };
+    onRejected = typeof onRejected === 'function' ? onRejected : error => {
+        throw error;
+    };
 
     // 如果x是一个promise，那么久拆解这个promise，直到返回值不为promise；
     // 如果不是一个promise，直接resolve即可
     function resolvePromise(bridgePromise, x, resolve, reject) {
-        //如果x是一个promise
+        // 如果x是一个promise
         if (x instanceof MyPromise) {
             // 拆解这个 promise ，直到返回值不为 promise 为止
             if (x.status === PENDING) {
@@ -54,10 +60,12 @@ myPromise.prototype.then = (onFulfilled, onRejected) => {
                 }, error => {
                     reject(error);
                 });
-            } else {
+            }
+            else {
                 x.then(resolve, reject);
             }
-        } else {
+        }
+        else {
             // 非 Promise 的话直接 resolve 即可
             resolve(x);
         }
@@ -65,30 +73,34 @@ myPromise.prototype.then = (onFulfilled, onRejected) => {
     if (this.status === PENDING) {
         this.onRejected = onRejected;
         this.onFulfilled = onFulfilled;
-    } else if (this.status === FULFILLED) {
+    }
+    else if (this.status === FULFILLED) {
         return bridgePromise = new Promise((resolve, reject) => {
             setTimeout(() => {
                 try {
                     x = onFulfilled(self.value);
                     resolvePromise(bridgePromise, x, resolve, reject);
-                } catch(e) {
+                }
+                catch (e) {
                     reject(e);
                 }
             }, 200);
         });
-    } else {
+    }
+    else {
         return bridgePromise = new Promise((resolve, reject) => {
             setTimeout(() => {
                 try {
                     x = onRejected(self.value);
                     resolvePromise(bridgePromise, x, resolve, reject);
-                } catch(e) {
+                }
+                catch (e) {
                     reject(e);
-                } 
+                }
             });
-        });   
+        });
     }
-}
+};
 myPromise.prototype.finally = callback => {
     return this.then(value => {
         myPromise.resolve(callback()).then(() => {
@@ -99,7 +111,7 @@ myPromise.prototype.finally = callback => {
             return err;
         });
     });
-}
+};
 myPromise.all = function (promise) {
     let result = [];
     let length = promise.length;
@@ -121,4 +133,4 @@ myPromise.all = function (promise) {
             reject(err);
         });
     }
-}
+};

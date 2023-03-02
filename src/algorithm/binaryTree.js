@@ -8,15 +8,17 @@ const inorderTraversal = root => {
         inorder(root.left);
         res.push(root.value);
         inorder(root.right);
-    }
+    };
     inorder(root);
     return res;
-}
+};
 
 // 二叉树的层序遍历
 const levelOrder = root => {
     let res = [];
-    if (!root) return res;
+    if (!root) {
+        return res;
+    }
 
     const q = [];
     q.push(root);
@@ -28,8 +30,12 @@ const levelOrder = root => {
         for (let i = 1; i <= level; ++i) {
             const node = q.shift();
             res[res.length - 1].push(node.val);
-            if (node.left) q.push(node.left);
-            if (node.right) q.push(node.right);
+            if (node.left) {
+                q.push(node.left);
+            }
+            if (node.right) {
+                q.push(node.right);
+            }
         }
     }
     return res;

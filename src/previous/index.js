@@ -110,7 +110,7 @@
 
 
 const tree = {
-    value: "1",
+    value: '1',
     left: {
         value: '2',
         left: {
@@ -123,8 +123,8 @@ const tree = {
             },
             right: {
                 value: '6',
-            }
-        }
+            },
+        },
     },
     right: {
         value: '7',
@@ -133,18 +133,18 @@ const tree = {
         },
         right: {
             value: '9',
-        }
-    }
-}
+        },
+    },
+};
 
 let result = [];
 let dfs = function (node) {
-    if(node) {
+    if (node) {
         result.push(node.value);
         dfs(node.left);
         dfs(node.right);
     }
-}
+};
 
 dfs(tree);
 console.log(result);

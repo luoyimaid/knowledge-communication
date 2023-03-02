@@ -107,7 +107,7 @@ console.log('end');
 
 // 实际问题2
 function Foo() {
-    getName = function(){ 
+    getName = function(){
         console.log(1);
     };
     return this;
@@ -115,7 +115,7 @@ function Foo() {
 Foo.getName = function() {  console.log(2); };
 Foo.prototype.getName = function(){  console.log(3); };
 var getName = function() {console.log(4); };
-function getName(){ console.log(5); }
+function getName() { console.log(5); }
 
 Foo.getName(); // 2
 getName(); // 4
@@ -175,4 +175,4 @@ function add() {
 add(1)(2)(3)                // 6
 add(1, 2, 3)(4)             // 10
 add(1)(2)(3)(4)(5)          // 15
-add(2, 6)(1) 
+add(2, 6)(1)

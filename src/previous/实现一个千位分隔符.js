@@ -18,13 +18,13 @@ const numFormat = num => {
     let arr = num[0].split('').reverse();
     let res = [];
     for (let i = 0; i < arr.length; i++) {
-        if(!(i%3) && i) {
+        if (!(i % 3) && i) {
             res.push(',');
         }
         res.push(arr[i]);
     }
     res = res.reverse().join('');
-    return num[1] ?  `${res}.${num[1]}` : res;
-}
+    return num[1] ? `${res}.${num[1]}` : res;
+};
 
 console.log(numFormat(a), numFormat(b), numFormat(c));

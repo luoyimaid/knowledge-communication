@@ -4,17 +4,17 @@ const keyboard = {
     element: {
         main: null,
         keysContainer: null,
-        key: []
+        key: [],
     },
 
     eventHandlers: {
         oninput: null,
-        onclose: null
+        onclose: null,
     },
 
     properties: {
         value: '',
-        capslock: false
+        capslock: false,
     },
 
     // 初始化执行方法，创建元素
@@ -38,7 +38,6 @@ const keyboard = {
         document.querySelectorAll('.use_keyboard_input').forEach(element => {
             element.addEventListener('focus', () => {
                 this.open(element.value, currentValue => {
-                    console.log(currentValue);
                     element.value = currentValue;
                 });
             });
@@ -53,14 +52,14 @@ const keyboard = {
             '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'backspace',
             'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
             'caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'enter',
-            'done', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?', 
-            'space'
+            'done', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?',
+            'space',
         ];
 
         // create html for icon
-        const createIconElement = (iconName) => {
-            return `<i class="material-icons">${iconName}</i>`
-        }
+        const createIconElement = iconName => {
+            return `<i class="material-icons">${iconName}</i>`;
+        };
 
         keyLayout.forEach(key => {
             const keyElement = document.createElement('button');
@@ -71,13 +70,13 @@ const keyboard = {
             keyElement.classList.add('keyboard_key');
 
             // 处理特殊键
-            switch(key) {
+            switch (key) {
                 case 'backspace':
                     keyElement.classList.add('keyboard_key_wide');
                     keyElement.innerHTML = createIconElement('backspaces');
                     keyElement.addEventListener('click', () => {
-                        this.properties.value =
-                            this.properties.value.toString(0, this.properties.value.length - 1);
+                        this.properties.value
+                            = this.properties.value.toString(0, this.properties.value.length - 1);
                         this._triggerEvent('oninput');
                     });
                     break;
@@ -133,19 +132,17 @@ const keyboard = {
 
     // oninput & onclose 执行方法
     _triggerEvent(eventName) {
-        console.log('event triggered, event name: ' + eventName);
-        if (typeof this.eventHandlers[eventName] == 'function') {
+        if (typeof this.eventHandlers[eventName] === 'function') {
             this.eventHandlers[eventName](this.properties.value);
         }
     },
 
     // 大小写键盘的切换方法
     _toggleCapsLock() {
-        console.log('caps lock toggled!');
         this.properties.capslock = !this.properties.capslock;
 
-        for(key of this.element.keys) {
-            if(key.childElementCount === 0) {
+        for (let key of this.element.keys) {
+            if (key.childElementCount === 0) {
                 key.textContent = this.properties.capslock
                     ? key.textContent.toUpperCase()
                     : key.textContent.toLocaleLowerCase();
@@ -166,8 +163,8 @@ const keyboard = {
         this.properties.value = '';
         this.eventHandlers.oninput = oninput;
         this.eventHandlers.onclose = onclose;
-        this.element.main.classList.add('keyboard_hidden')
-    }
+        this.element.main.classList.add('keyboard_hidden');
+    },
 };
 
 export default keyboard;

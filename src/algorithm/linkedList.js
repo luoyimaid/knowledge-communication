@@ -7,17 +7,18 @@ const removeElements = (head, val) => {
     while (curr) {
         if (curr.val === val) {
             prev.next = curr.next;
-        } else {
+        }
+        else {
             prev = curr;
         }
         curr = curr.next;
     }
 
     return preHead.next;
-}
+};
 
 // 中间节点链表反转
-const reverseLinkedList = (head) => {
+const reverseLinkedList = head => {
     let pre = null;
     let cur = head;
 
@@ -27,16 +28,16 @@ const reverseLinkedList = (head) => {
         pre = cur;
         cur = next;
     }
-}
+};
 
-var reverseBetween = function(head, left, right) {
+let reverseBetween = function (head, left, right) {
     let perHead = new ListNode(-1);
     perHead.next = head;
     let prev = perHead;
     let rightNode = prev.next;
 
     // 先找到要反转子串的前一个节点和后一个节点
-    for (let i = 0; i < left - 1; i ++) {
+    for (let i = 0; i < left - 1; i++) {
         prev = prev.next;
     }
     let leftNode = prev.next;
@@ -57,7 +58,7 @@ var reverseBetween = function(head, left, right) {
 };
 
 // 合并两个升序链表（三个指针，prev,l1,l2）
-var mergeTwoLists = function(l1, l2) {
+let mergeTwoLists = function (l1, l2) {
     const preHead = new ListNode(-1);
     let prev = preHead;
 
@@ -65,7 +66,8 @@ var mergeTwoLists = function(l1, l2) {
         if (l1.val < l2.val) {
             prev.next = l1;
             l1 = l1.next;
-        } else {
+        }
+        else {
             prev.next = l2;
             l2 = l2.next;
         }

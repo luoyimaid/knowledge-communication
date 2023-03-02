@@ -1,12 +1,13 @@
 {
-  "name": "bundle-test",
+  "name": "knowledge",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production webpack-cli build --entry ./src/index.js -o ./output",
     "build:s": "NODE_ENV=production san build ./src/index.js",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "lint": "eslint . -c .eslintrc.js --no-eslintrc --fix"
   },
   "repository": {
     "type": "git",
@@ -14,15 +15,6 @@
   },
   "author": "luoyi_maid",
   "license": "UNLICENSED",
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint",
-    "*.{css,less,scss,styl}": "stylelint"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "devDependencies": {
     "@ecomfe/eslint-config": "^4.0.0",
     "@ecomfe/stylelint-config": "^1.0.0",

@@ -21,30 +21,3 @@ witness my growing &amp; improvement
 还有analyze插件，生成一个json文件
 
 [文档放置在此处](https://github.com/luoyimaid/knowledge-communication/tree/master/docs)
-
-### 1. JS方法实现
-> [改变this指向](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/this.js)
-
-> [setTimeout & setInterval互相实现](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/ready.js#L2)
-
-> [instanceof](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/ready.js#L25)
-
-> [throttle & debounce](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/ready.js#L38)
-
-> [deepClone](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/deepClone.js)
-
-> [promise实际代码题](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/ready.js#L73)
-
-> [执行机制实际代码题](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/ready.js#L108)
-
-> [各种排序](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/sort.js)
-
-> [发布-订阅模式](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/ready.js#L127)
-
-> [函数科里化](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/ready.js#L155)
-
-> [promise及其方法实现](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/promise.js)
-
-> [原生JS实现数组map，reduce，filter方法](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/array.js#L6)
-
-> [各种数组去重方法](https://github.com/luoyimaid/knowledge-communication/blob/master/nativeJS/array.js#L108)

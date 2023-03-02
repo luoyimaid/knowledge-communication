@@ -35,6 +35,7 @@ Function.prototype.bind = function (thisArg) {
 ```
 
 ### 2. 防抖&节流
+
 ```
 // 实现函数节流：间隔时间执行（比如间隔一秒执行一次）
 function throttle(func, time) {

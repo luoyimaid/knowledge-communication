@@ -7,13 +7,13 @@ function initReactive() {
                 let dirty = true;
 
                 if (!prevRes.dirty && !data[key]) {
-                    dirty = false
+                    dirty = false;
                 }
                 const verifyResult = verifySingle(key, data[key], this.ruleConfig[key]);
                 this.vRes[key] = {
                     ...prevRes,
                     ...verifyResult,
-                    dirty
+                    dirty,
                 };
             }));
         }
@@ -36,20 +36,23 @@ export const defineReactive = (obj, key, listener) => {
         enumerable: true,
         configurable: true,
         get() {
-            return getter ? getter.call(obj) : val
+            return getter ? getter.call(obj) : val;
         },
         set(newVal) {
-            const value = getter ? getter.call(obj) : val
+            const value = getter ? getter.call(obj) : val;
             // 值没有变，或者新旧值都为 NaN 的时候，什么都不做
-            if (newVal === value || (newVal !== newVal && value !== value)) return
+            if (newVal === value || (newVal !== newVal && value !== value)) {
+                return;
+            }
             if (setter) {
-                setter.call(obj, newVal)
-            } else {
-                val = newVal
+                setter.call(obj, newVal);
+            }
+            else {
+                val = newVal;
             }
             // 值变动后，自动调用监听者
-            typeof listener === 'function' && listener()
-            Array.isArray(listener) && listener.forEach(fn => fn)
-        }
+            typeof listener === 'function' && listener();
+            Array.isArray(listener) && listener.forEach(fn => fn);
+        },
     });
-}
+};
